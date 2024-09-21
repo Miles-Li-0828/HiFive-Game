@@ -24,7 +24,8 @@ public class TestScoring {
     }
 
     private RoundData convertFromLogLine(String logLine) {
-        if (!logLine.startsWith("Round")) {
+        if (!logLine.startsWith("Round"))
+        {
             return null;
         }
 

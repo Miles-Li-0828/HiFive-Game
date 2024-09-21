@@ -9,53 +9,67 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
-public class HiFive extends CardGame {
+public class HiFive extends CardGame
+{
 
-    public enum Suit {
-        SPADES ("S", 20), HEARTS ("H", 15),
-        DIAMONDS ("D", 10), CLUBS ("C", 5);
+    public enum Suit
+    {
+        SPADES("S", 20), HEARTS("H", 15),
+        DIAMONDS("D", 10), CLUBS("C", 5);
         private String suitShortHand = "";
         private int bonusFactor = 1;
-        Suit(String shortHand, int bonusFactor) {
+
+        Suit(String shortHand, int bonusFactor)
+        {
             this.suitShortHand = shortHand;
             this.bonusFactor = bonusFactor;
         }
 
-        public String getSuitShortHand() {
+        public String getSuitShortHand()
+        {
             return suitShortHand;
         }
 
-        public int getBonusFactor() {
+        public int getBonusFactor()
+        {
             return bonusFactor;
         }
     }
 
-    public enum Rank {
+    public enum Rank
+    {
         // Reverse order of rank importance (see rankGreater() below)
-        ACE (1, 1),
-        KING (13, 13),
-        QUEEN (12, 12),
-        JACK (11, 11),
-        TEN (10, 10), NINE (9, 9),
-        EIGHT (8, 8), SEVEN (7, 7),
-        SIX (6, 6), FIVE (5, 5),
-        FOUR (4, 4), THREE (3, 3),
-        TWO (2, 2);
+        ACE(1, 1),
+        KING(13, 13),
+        QUEEN(12, 12),
+        JACK(11, 11),
+        TEN(10, 10), NINE(9, 9),
+        EIGHT(8, 8), SEVEN(7, 7),
+        SIX(6, 6), FIVE(5, 5),
+        FOUR(4, 4), THREE(3, 3),
+        TWO(2, 2);
 
         private int rankCardValue = 1;
         private int scoreValue = 0;
-        Rank(int rankCardValue, int scoreValue) {
+
+        Rank(int rankCardValue, int scoreValue)
+        {
             this.rankCardValue = rankCardValue;
             this.scoreValue = scoreValue;
         }
 
-        public int getRankCardValue() {
+        public int getRankCardValue()
+        {
             return rankCardValue;
         }
 
-        public int getScoreCardValue() { return scoreValue; }
+        public int getScoreCardValue()
+        {
+            return scoreValue;
+        }
 
-        public String getRankCardLog() {
+        public String getRankCardLog()
+        {
             return String.format("%d", rankCardValue);
         }
     }
@@ -68,7 +82,8 @@ public class HiFive extends CardGame {
     private StringBuilder logResult = new StringBuilder();
     private List<List<String>> playerAutoMovements = new ArrayList<>();
 
-    public boolean rankGreater(Card card1, Card card2) {
+    public boolean rankGreater(Card card1, Card card2)
+    {
         return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
     }
 
@@ -102,21 +117,25 @@ public class HiFive extends CardGame {
     private int thinkingTime = 2000;
     private int delayTime = 600;
     private Hand[] hands;
-    public void setStatus(String string) {
+
+    public void setStatus(String string)
+    {
         setStatusText(string);
     }
 
     private int[] scores = new int[nbPlayers];
 
-    private int[] autoIndexHands = new int [nbPlayers];
+    private int[] autoIndexHands = new int[nbPlayers];
     private boolean isAuto = false;
     private Hand playingArea;
     private Hand pack;
 
     Font bigFont = new Font("Arial", Font.BOLD, 36);
 
-    private void initScore() {
-        for (int i = 0; i < nbPlayers; i++) {
+    private void initScore()
+    {
+        for (int i = 0; i < nbPlayers; i++)
+        {
             // scores[i] = 0;
             String text = "[" + String.valueOf(scores[i]) + "]";
             scoreActors[i] = new TextActor(text, Color.WHITE, bgColor, bigFont);
@@ -124,11 +143,14 @@ public class HiFive extends CardGame {
         }
     }
 
-    private int findIndexWithHigestScore(int[] scoreArray) {
+    private int findIndexWithHigestScore(int[] scoreArray)
+    {
         int maxScore = -1;
         int maxScoreIndex = 0;
-        for (int i = 0; i < scoreArray.length; i++) {
-            if (maxScore < scoreArray[i]) {
+        for (int i = 0; i < scoreArray.length; i++)
+        {
+            if (maxScore < scoreArray[i])
+            {
                 maxScoreIndex = i;
                 maxScore = scoreArray[i];
             }
@@ -137,14 +159,17 @@ public class HiFive extends CardGame {
         return maxScoreIndex;
     }
 
-    private void calculateScoreEndOfRound() {
+    private void calculateScoreEndOfRound()
+    {
         List<Integer> isThirteenChecks = Arrays.asList(0, 0, 0, 0);
-        for (int i = 0; i < hands.length; i++) {
+        for (int i = 0; i < hands.length; i++)
+        {
             scores[i] = scoreForHiFive(i);
         }
     }
 
-    private void updateScore(int player) {
+    private void updateScore(int player)
+    {
         removeActor(scoreActors[player]);
         int displayScore = Math.max(scores[player], 0);
         String text = "P" + player + "[" + displayScore + "]";
@@ -152,15 +177,18 @@ public class HiFive extends CardGame {
         addActor(scoreActors[player], scoreLocations[player]);
     }
 
-    private void initScores() {
+    private void initScores()
+    {
         Arrays.fill(scores, 0);
     }
 
     private Card selected;
 
-    private void initGame() {
+    private void initGame()
+    {
         hands = new Hand[nbPlayers];
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < nbPlayers; i++)
+        {
             hands[i] = new Hand(deck);
         }
         playingArea = new Hand(deck);
@@ -168,13 +196,15 @@ public class HiFive extends CardGame {
         playingArea.setView(this, new RowLayout(trickLocation, (playingArea.getNumberOfCards() + 2) * trickWidth));
         playingArea.draw();
 
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < nbPlayers; i++)
+        {
             hands[i].sort(Hand.SortType.SUITPRIORITY, false);
         }
         // Set up human player for interaction
         CardListener cardListener = new CardAdapter()  // Human Player plays card
         {
-            public void leftDoubleClicked(Card card) {
+            public void leftDoubleClicked(Card card)
+            {
                 selected = card;
                 hands[0].setTouchEnabled(false);
             }
@@ -182,7 +212,8 @@ public class HiFive extends CardGame {
         hands[0].addCardListener(cardListener);
         // graphics
         RowLayout[] layouts = new RowLayout[nbPlayers];
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < nbPlayers; i++)
+        {
             layouts[i] = new RowLayout(handLocations[i], handWidth);
             layouts[i].setRotationAngle(90 * i);
             // layouts[i].setStepDelay(10);
@@ -194,18 +225,21 @@ public class HiFive extends CardGame {
 
 
     // return random Enum value
-    public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz)
+    {
         int x = random.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }
 
     // return random Card from ArrayList
-    public static Card randomCard(ArrayList<Card> list) {
+    public static Card randomCard(ArrayList<Card> list)
+    {
         int x = random.nextInt(list.size());
         return list.get(x);
     }
 
-    public Card getRandomCard(Hand hand) {
+    public Card getRandomCard(Hand hand)
+    {
         dealACardToHand(hand);
 
         delay(thinkingTime);
@@ -214,12 +248,15 @@ public class HiFive extends CardGame {
         return hand.getCardList().get(x);
     }
 
-    private Rank getRankFromString(String cardName) {
+    private Rank getRankFromString(String cardName)
+    {
         String rankString = cardName.substring(0, cardName.length() - 1);
         Integer rankValue = Integer.parseInt(rankString);
 
-        for (Rank rank : Rank.values()) {
-            if (rank.getRankCardValue() == rankValue) {
+        for (Rank rank : Rank.values())
+        {
+            if (rank.getRankCardValue() == rankValue)
+            {
                 return rank;
             }
         }
@@ -227,13 +264,16 @@ public class HiFive extends CardGame {
         return Rank.ACE;
     }
 
-    private Suit getSuitFromString(String cardName) {
+    private Suit getSuitFromString(String cardName)
+    {
         String rankString = cardName.substring(0, cardName.length() - 1);
         String suitString = cardName.substring(cardName.length() - 1, cardName.length());
         Integer rankValue = Integer.parseInt(rankString);
 
-        for (Suit suit : Suit.values()) {
-            if (suit.getSuitShortHand().equals(suitString)) {
+        for (Suit suit : Suit.values())
+        {
+            if (suit.getSuitShortHand().equals(suitString))
+            {
                 return suit;
             }
         }
@@ -241,12 +281,15 @@ public class HiFive extends CardGame {
     }
 
 
-    private Card getCardFromList(List<Card> cards, String cardName) {
+    private Card getCardFromList(List<Card> cards, String cardName)
+    {
         Rank cardRank = getRankFromString(cardName);
         Suit cardSuit = getSuitFromString(cardName);
-        for (Card card: cards) {
+        for (Card card : cards)
+        {
             if (card.getSuit() == cardSuit
-                    && card.getRank() == cardRank) {
+                    && card.getRank() == cardRank)
+            {
                 return card;
             }
         }
@@ -254,35 +297,46 @@ public class HiFive extends CardGame {
         return null;
     }
 
-    private Card applyAutoMovement(Hand hand, String nextMovement) {
+    private Card applyAutoMovement(Hand hand, String nextMovement)
+    {
         if (pack.isEmpty()) return null;
         String[] cardStrings = nextMovement.split("-");
         String cardDealtString = cardStrings[0];
         Card dealt = getCardFromList(pack.getCardList(), cardDealtString);
-        if (dealt != null) {
+        if (dealt != null)
+        {
             dealt.removeFromHand(false);
             hand.insert(dealt, true);
-        } else {
+        }
+        else
+        {
             System.out.println("cannot draw card: " + cardDealtString + " - hand: " + hand);
         }
 
-        if (cardStrings.length > 1) {
+        if (cardStrings.length > 1)
+        {
             String cardDiscardString = cardStrings[1];
             return getCardFromList(hand.getCardList(), cardDiscardString);
-        } else {
+        }
+        else
+        {
             return null;
         }
     }
 
-    private int scoreForFive(List<Card> privateCards) {
+    private int scoreForFive(List<Card> privateCards)
+    {
         int maxScore = 0;
-        for (int i = 0; i < privateCards.size(); i++) {
+        for (int i = 0; i < privateCards.size(); i++)
+        {
             Card card = privateCards.get(i);
-            Rank rank = (Rank)card.getRank();
-            Suit suit = (Suit)card.getSuit();
-            if (rank.getRankCardValue() == FIVE_GOAL) {
+            Rank rank = (Rank) card.getRank();
+            Suit suit = (Suit) card.getSuit();
+            if (rank.getRankCardValue() == FIVE_GOAL)
+            {
                 int score = FIVE_POINTS + suit.getBonusFactor();
-                if (score > maxScore) {
+                if (score > maxScore)
+                {
                     maxScore = score;
                 }
             }
@@ -291,80 +345,94 @@ public class HiFive extends CardGame {
         return maxScore;
     }
 
-    private int scoreForSumFive(List<Card> privateCards) {
+    private int scoreForSumFive(List<Card> privateCards)
+    {
         Card card1 = privateCards.get(0);
         Card card2 = privateCards.get(1);
-        Rank rank1 = (Rank)card1.getRank();
-        Rank rank2 = (Rank)card2.getRank();
-        if (rank1.getRankCardValue() + rank2.getRankCardValue() == FIVE_GOAL) {
-            Suit suit1 = (Suit)card1.getSuit();
-            Suit suit2 = (Suit)card2.getSuit();
+        Rank rank1 = (Rank) card1.getRank();
+        Rank rank2 = (Rank) card2.getRank();
+        if (rank1.getRankCardValue() + rank2.getRankCardValue() == FIVE_GOAL)
+        {
+            Suit suit1 = (Suit) card1.getSuit();
+            Suit suit2 = (Suit) card2.getSuit();
             return SUM_FIVE_POINTS + suit1.getBonusFactor() + suit2.getBonusFactor();
         }
 
         return 0;
     }
 
-    private int scoreForDifferenceFive(List<Card> privateCards) {
+    private int scoreForDifferenceFive(List<Card> privateCards)
+    {
         Card card1 = privateCards.get(0);
         Card card2 = privateCards.get(1);
-        Rank rank1 = (Rank)card1.getRank();
-        Rank rank2 = (Rank)card2.getRank();
-        if (Math.abs(rank1.getRankCardValue() - rank2.getRankCardValue()) == FIVE_GOAL) {
-            Suit suit1 = (Suit)card1.getSuit();
-            Suit suit2 = (Suit)card2.getSuit();
+        Rank rank1 = (Rank) card1.getRank();
+        Rank rank2 = (Rank) card2.getRank();
+        if (Math.abs(rank1.getRankCardValue() - rank2.getRankCardValue()) == FIVE_GOAL)
+        {
+            Suit suit1 = (Suit) card1.getSuit();
+            Suit suit2 = (Suit) card2.getSuit();
             return DIFFERENCE_FIVE_POINTS + suit1.getBonusFactor() + suit2.getBonusFactor();
         }
 
         return 0;
     }
 
-    private int scoreForNoFive(List<Card> privateCards) {
+    private int scoreForNoFive(List<Card> privateCards)
+    {
         Card card1 = privateCards.get(0);
         Card card2 = privateCards.get(1);
-        Rank rank1 = (Rank)card1.getRank();
-        Rank rank2 = (Rank)card2.getRank();
+        Rank rank1 = (Rank) card1.getRank();
+        Rank rank2 = (Rank) card2.getRank();
 
         return rank1.getRankCardValue() + rank2.getRankCardValue();
     }
 
-    private int scoreForHiFive(int playerIndex) {
+    private int scoreForHiFive(int playerIndex)
+    {
         List<Card> privateCards = hands[playerIndex].getCardList();
         int score1 = scoreForFive(privateCards);
         int score2 = scoreForSumFive(privateCards);
         int score3 = scoreForDifferenceFive(privateCards);
         int score4 = scoreForNoFive(privateCards);
-        int [] scores = { score1, score2, score3, score4 };
+        int[] scores = {score1, score2, score3, score4};
         int finalScore = scores[findIndexWithHigestScore(scores)];
         return finalScore;
     }
 
 
-    private void dealingOut(Hand[] hands, int nbPlayers, int nbCardsPerPlayer, int nbSharedCards) {
+    private void dealingOut(Hand[] hands, int nbPlayers, int nbCardsPerPlayer, int nbSharedCards)
+    {
         pack = deck.toHand(false);
 
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < nbPlayers; i++)
+        {
             String initialCardsKey = "players." + i + ".initialcards";
             String initialCardsValue = properties.getProperty(initialCardsKey);
-            if (initialCardsValue == null) {
+            if (initialCardsValue == null)
+            {
                 continue;
             }
             String[] initialCards = initialCardsValue.split(",");
-            for (String initialCard: initialCards) {
-                if (initialCard.length() <= 1) {
+            for (String initialCard : initialCards)
+            {
+                if (initialCard.length() <= 1)
+                {
                     continue;
                 }
                 Card card = getCardFromList(pack.getCardList(), initialCard);
-                if (card != null) {
+                if (card != null)
+                {
                     card.removeFromHand(false);
                     hands[i].insert(card, false);
                 }
             }
         }
 
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < nbPlayers; i++)
+        {
             int cardsToDealt = nbCardsPerPlayer - hands[i].getNumberOfCards();
-            for (int j = 0; j < cardsToDealt; j++) {
+            for (int j = 0; j < cardsToDealt; j++)
+            {
                 if (pack.isEmpty()) return;
                 Card dealt = randomCard(pack.getCardList());
                 dealt.removeFromHand(false);
@@ -373,71 +441,85 @@ public class HiFive extends CardGame {
         }
     }
 
-    private void dealACardToHand(Hand hand) {
+    private void dealACardToHand(Hand hand)
+    {
         if (pack.isEmpty()) return;
         Card dealt = randomCard(pack.getCardList());
         dealt.removeFromHand(false);
         hand.insert(dealt, true);
     }
 
-    private void addCardPlayedToLog(int player, List<Card> cards) {
-        if (cards.size() < 2) {
+    private void addCardPlayedToLog(int player, List<Card> cards)
+    {
+        if (cards.size() < 2)
+        {
             return;
         }
         logResult.append("P" + player + "-");
 
-        for (int i = 0; i < cards.size(); i++) {
+        for (int i = 0; i < cards.size(); i++)
+        {
             Rank cardRank = (Rank) cards.get(i).getRank();
             Suit cardSuit = (Suit) cards.get(i).getSuit();
             logResult.append(cardRank.getRankCardLog() + cardSuit.getSuitShortHand());
-            if (i < cards.size() - 1) {
+            if (i < cards.size() - 1)
+            {
                 logResult.append("-");
             }
         }
         logResult.append(",");
     }
 
-    private void addRoundInfoToLog(int roundNumber) {
+    private void addRoundInfoToLog(int roundNumber)
+    {
         logResult.append("Round" + roundNumber + ":");
     }
 
-    private void addEndOfRoundToLog() {
+    private void addEndOfRoundToLog()
+    {
         logResult.append("Score:");
-        for (int i = 0; i < scores.length; i++) {
+        for (int i = 0; i < scores.length; i++)
+        {
             logResult.append(scores[i] + ",");
         }
         logResult.append("\n");
     }
 
-    private void addEndOfGameToLog(List<Integer> winners) {
+    private void addEndOfGameToLog(List<Integer> winners)
+    {
         logResult.append("EndGame:");
-        for (int i = 0; i < scores.length; i++) {
+        for (int i = 0; i < scores.length; i++)
+        {
             logResult.append(scores[i] + ",");
         }
         logResult.append("\n");
         logResult.append("Winners:" + String.join(", ", winners.stream().map(String::valueOf).collect(Collectors.toList())));
     }
 
-    private void playGame() {
+    private void playGame()
+    {
         // End trump suit
         int winner = 0;
         int roundNumber = 1;
         for (int i = 0; i < nbPlayers; i++) updateScore(i);
 
-        List<Card>cardsPlayed = new ArrayList<>();
+        List<Card> cardsPlayed = new ArrayList<>();
         addRoundInfoToLog(roundNumber);
 
         int nextPlayer = 0;
-        while(roundNumber <= 4) {
+        while (roundNumber <= 4)
+        {
             selected = null;
             boolean finishedAuto = false;
 
-            if (isAuto) {
+            if (isAuto)
+            {
                 int nextPlayerAutoIndex = autoIndexHands[nextPlayer];
                 List<String> nextPlayerMovement = playerAutoMovements.get(nextPlayer);
                 String nextMovement = "";
 
-                if (nextPlayerMovement.size() > nextPlayerAutoIndex) {
+                if (nextPlayerMovement.size() > nextPlayerAutoIndex)
+                {
                     nextMovement = nextPlayerMovement.get(nextPlayerAutoIndex);
                     nextPlayerAutoIndex++;
 
@@ -447,19 +529,26 @@ public class HiFive extends CardGame {
                     // Apply movement for player
                     selected = applyAutoMovement(nextHand, nextMovement);
                     delay(delayTime);
-                    if (selected != null) {
+                    if (selected != null)
+                    {
                         selected.removeFromHand(true);
-                    } else {
+                    }
+                    else
+                    {
                         selected = getRandomCard(hands[nextPlayer]);
                         selected.removeFromHand(true);
                     }
-                } else {
+                }
+                else
+                {
                     finishedAuto = true;
                 }
             }
 
-            if (!isAuto || finishedAuto) {
-                if (0 == nextPlayer) {
+            if (!isAuto || finishedAuto)
+            {
+                if (0 == nextPlayer)
+                {
                     hands[0].setTouchEnabled(true);
 
                     setStatus("Player 0 is playing. Please double click on a card to discard");
@@ -467,7 +556,9 @@ public class HiFive extends CardGame {
                     dealACardToHand(hands[0]);
                     while (null == selected) delay(delayTime);
                     selected.removeFromHand(true);
-                } else {
+                }
+                else
+                {
                     setStatusText("Player " + nextPlayer + " thinking...");
                     selected = getRandomCard(hands[nextPlayer]);
                     selected.removeFromHand(true);
@@ -475,7 +566,8 @@ public class HiFive extends CardGame {
             }
 
             addCardPlayedToLog(nextPlayer, hands[nextPlayer].getCardList());
-            if (selected != null) {
+            if (selected != null)
+            {
                 cardsPlayed.add(selected);
                 selected.setVerso(false);  // In case it is upside down
                 delay(delayTime);
@@ -486,53 +578,63 @@ public class HiFive extends CardGame {
             updateScore(nextPlayer);
             nextPlayer = (nextPlayer + 1) % nbPlayers;
 
-            if (nextPlayer == 0) {
-                roundNumber ++;
+            if (nextPlayer == 0)
+            {
+                roundNumber++;
                 addEndOfRoundToLog();
 
-                if (roundNumber <= 4) {
+                if (roundNumber <= 4)
+                {
                     addRoundInfoToLog(roundNumber);
                 }
             }
 
-            if (roundNumber > 4) {
+            if (roundNumber > 4)
+            {
                 calculateScoreEndOfRound();
             }
             delay(delayTime);
         }
     }
 
-    private void setupPlayerAutoMovements() {
+    private void setupPlayerAutoMovements()
+    {
         String player0AutoMovement = properties.getProperty("players.0.cardsPlayed");
         String player1AutoMovement = properties.getProperty("players.1.cardsPlayed");
         String player2AutoMovement = properties.getProperty("players.2.cardsPlayed");
         String player3AutoMovement = properties.getProperty("players.3.cardsPlayed");
 
-        String[] playerMovements = new String[] {"", "", "", ""};
-        if (player0AutoMovement != null) {
+        String[] playerMovements = new String[]{"", "", "", ""};
+        if (player0AutoMovement != null)
+        {
             playerMovements[0] = player0AutoMovement;
         }
 
-        if (player1AutoMovement != null) {
+        if (player1AutoMovement != null)
+        {
             playerMovements[1] = player1AutoMovement;
         }
 
-        if (player2AutoMovement != null) {
+        if (player2AutoMovement != null)
+        {
             playerMovements[2] = player2AutoMovement;
         }
 
-        if (player3AutoMovement != null) {
+        if (player3AutoMovement != null)
+        {
             playerMovements[3] = player3AutoMovement;
         }
 
-        for (int i = 0; i < playerMovements.length; i++) {
+        for (int i = 0; i < playerMovements.length; i++)
+        {
             String movementString = playerMovements[i];
             List<String> movements = Arrays.asList(movementString.split(","));
             playerAutoMovements.add(movements);
         }
     }
 
-    public String runApp() {
+    public String runApp()
+    {
         setTitle("LuckyThirteen (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
         setStatusText("Initializing...");
         initScores();
@@ -547,10 +649,13 @@ public class HiFive extends CardGame {
         List<Integer> winners = new ArrayList<Integer>();
         for (int i = 0; i < nbPlayers; i++) if (scores[i] == maxScore) winners.add(i);
         String winText;
-        if (winners.size() == 1) {
+        if (winners.size() == 1)
+        {
             winText = "Game over. Winner is player: " +
                     winners.iterator().next();
-        } else {
+        }
+        else
+        {
             winText = "Game Over. Drawn winners are players: " +
                     String.join(", ", winners.stream().map(String::valueOf).collect(Collectors.toList()));
         }
@@ -562,7 +667,8 @@ public class HiFive extends CardGame {
         return logResult.toString();
     }
 
-    public HiFive(Properties properties) {
+    public HiFive(Properties properties)
+    {
         super(700, 700, 30);
         this.properties = properties;
         isAuto = Boolean.parseBoolean(properties.getProperty("isAuto"));

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="scores.TestScoring" tests="4" skipped="1" failures="1" errors="0" timestamp="2024-09-21T13:05:24" hostname="Miless-Air.modem" time="16.223">
+  <properties/>
+  <testcase name="test2WinnerWildCard" classname="scores.TestScoring" time="1.439">
+    <failure message="java.lang.NumberFormatException: For input string: &quot;Q&quot;" type="java.lang.NumberFormatException">java.lang.NumberFormatException: For input string: &quot;Q&quot;
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:668)
+	at java.base/java.lang.Integer.parseInt(Integer.java:784)
+	at hifive.HiFive.getRankFromString(HiFive.java:254)
+	at hifive.HiFive.getCardFromList(HiFive.java:286)
+	at hifive.HiFive.applyAutoMovement(HiFive.java:305)
+	at hifive.HiFive.playGame(HiFive.java:530)
+	at hifive.HiFive.runApp(HiFive.java:644)
+	at scores.TestScoring.runningGame(TestScoring.java:72)
+	at scores.TestScoring.test2WinnerWildCard(TestScoring.java:124)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:299)
+	at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:293)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+</failure>
+  </testcase>
+  <testcase name="test1WinnerOriginal" classname="scores.TestScoring" time="10.436"/>
+  <testcase name="test0Winner" classname="scores.TestScoring" time="1.199"/>
+  <testcase name="test2WinnerOriginal" classname="scores.TestScoring" time="3.149">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[logResult = Round1:P0-1H-3H,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:4,3,3,3,
+Round2:P0-1H-4H,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:90,3,3,3,
+Round3:P0-4H-5H,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:115,3,3,3,
+Round4:P0-4H-5H-7D,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:115,3,3,3,
+EndGame:115,3,3,3,
+Winners:0
+logResult = Round1:P0-2D-3D,P1-2S-3S,P2-1C-2C,P3-2H-10H,Score:80,100,3,12,
+Round2:P0-3D-4D,P1-3S-4S,P2-1C-2C,P3-10H-11H,Score:7,7,3,21,
+Round3:P0-4D-9D,P1-4S-7S,P2-2C-8C,P3-10H-11H,Score:40,11,10,21,
+Round4:P0-9D-10D,P1-7S-8S,P2-8C-9C,P3-10H-11H,Score:19,15,17,21,
+EndGame:19,15,17,21,
+Winners:3
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,14 @@
+FlogResult = Round1:P0-1H-3H,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:4,3,3,3,
+;Round2:P0-1H-4H,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:90,3,3,3,
+<Round3:P0-4H-5H,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:115,3,3,3,
+?Round4:P0-4H-5H-7D,P1-1D-2D,P2-1C-2C,P3-1S-2S,Score:115,3,3,3,
+EndGame:115,3,3,3,
+
+Winners:0
+KlogResult = Round1:P0-2D-3D,P1-2S-3S,P2-1C-2C,P3-2H-10H,Score:80,100,3,12,
+=Round2:P0-3D-4D,P1-3S-4S,P2-1C-2C,P3-10H-11H,Score:7,7,3,21,
+@Round3:P0-4D-9D,P1-4S-7S,P2-2C-8C,P3-10H-11H,Score:40,11,10,21,
+ARound4:P0-9D-10D,P1-7S-8S,P2-8C-9C,P3-10H-11H,Score:19,15,17,21,
+EndGame:19,15,17,21,
+
+Winners:3
