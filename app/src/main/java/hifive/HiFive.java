@@ -74,7 +74,7 @@ public class HiFive extends CardGame
         }
     }
 
-    final String trumpImage[] = {"bigspade.gif", "bigheart.gif", "bigdiamond.gif", "bigclub.gif"};
+    final String[] trumpImage = {"bigspade.gif", "bigheart.gif", "bigdiamond.gif", "bigclub.gif"};
 
     static public final int seed = 30008;
     static final Random random = new Random(seed);
