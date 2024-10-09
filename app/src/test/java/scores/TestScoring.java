@@ -24,8 +24,7 @@ public class TestScoring {
     }
 
     private RoundData convertFromLogLine(String logLine) {
-        if (!logLine.startsWith("Round"))
-        {
+        if (!logLine.startsWith("Round")) {
             return null;
         }
 
@@ -91,7 +90,7 @@ public class TestScoring {
     }
 
     @Test(timeout = 60000)
-    public void test1WinnerWildCard() {
+    public void test1WinnerExtension() {
         String testProperties = "properties/test2.properties";
         Scanner scanner = runningGame(testProperties);
         while (scanner.hasNextLine()) {
@@ -119,7 +118,7 @@ public class TestScoring {
     }
 
     @Test(timeout = 600000)
-    public void test2WinnerWildCard() {
+    public void test2WinnerExtension() {
         String testProperties = "properties/test4.properties";
         Scanner scanner = runningGame(testProperties);
         while (scanner.hasNextLine()) {
