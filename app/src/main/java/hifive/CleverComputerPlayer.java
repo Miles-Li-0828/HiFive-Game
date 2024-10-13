@@ -2,9 +2,10 @@ package hifive;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Deck;
-import org.checkerframework.checker.units.qual.C;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 public class CleverComputerPlayer extends ComputerPlayer
 {
@@ -64,6 +65,11 @@ public class CleverComputerPlayer extends ComputerPlayer
         return selectedCard;
     }
 
+    /**
+     * calculate the highest score for the current deck in hand
+     * @param handCards : cards in hand
+     * @return int score
+     */
     private int calculateWorstScore(List<Card> handCards)
     {
        CompositeCalculator cc = super.getCompositeCalculator();

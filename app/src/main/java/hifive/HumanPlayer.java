@@ -4,6 +4,14 @@ import ch.aplu.jcardgame.*;
 
 import java.util.Properties;
 
+/**
+ * HumanPlayer class represents a human player in the Hi Five card game
+ * Provided specific functionality for human interaction
+ *
+ * @version 1.0
+ * @since 2024-10-01
+ * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ */
 public class HumanPlayer extends Player
 {
     private Card selected = null;
@@ -21,6 +29,12 @@ public class HumanPlayer extends Player
         super(id, deck, properties, game);
     }
 
+    /**
+     * Human player to select a card to play by double-clicking on it
+     * Waits for the player to make a selection and returns the chosen card
+     *
+     * @return Card: selected card
+     */
     @Override
     public Card play()
     {
@@ -45,6 +59,11 @@ public class HumanPlayer extends Player
         return selected;
     }
 
+    /**
+     * Choose the card to be discarded
+     *
+     * @return Cards : the card that selected to discard
+     */
     @Override
     public Card discardCard()
     {

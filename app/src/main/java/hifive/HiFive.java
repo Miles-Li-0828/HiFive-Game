@@ -101,6 +101,9 @@ public class HiFive extends CardGame
         }
     }
 
+    /**
+     * update players' score
+     */
     private void calculateScoreEndOfRound()
     {
         for (int i = 0; i < players.length; i++)
@@ -141,14 +144,20 @@ public class HiFive extends CardGame
     }
 
 
-    // return random Enum value
+    /**
+     * return random Enum value
+     */
     public static <T extends Enum<?>> T randomEnum(Class<T> clazz)
     {
         int x = random.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }
 
-
+    /**
+     * get a random card for a hand of card
+     * @param hand: a hand of card
+     * @return Card: a random card from hand
+     */
     public Card getRandomCard(Hand hand)
     {
         dealACardToHand(hand);
@@ -209,6 +218,11 @@ public class HiFive extends CardGame
         }
     }
 
+    /**
+     * Dealt a random card to hand
+     *
+     * @param hand: a hand of card
+     */
     public void dealACardToHand(Hand hand)
     {
         if (pack.isEmpty()) return;
@@ -217,6 +231,12 @@ public class HiFive extends CardGame
         hand.insert(dealt, true);
     }
 
+    /**
+     * Logs the cards played by a specific player during a turn
+     *
+     * @param player: the player whose cards are being logged
+     * @param cards: a list of Card that were played by the player
+     */
     private void addCardPlayedToLog(int player, List<Card> cards)
     {
         if (cards.size() < 2)
@@ -243,6 +263,9 @@ public class HiFive extends CardGame
         logResult.append("Round" + roundNumber + ":");
     }
 
+    /**
+     * Logs the current round number in the game
+     */
     private void addEndOfRoundToLog()
     {
         logResult.append("Score:");
@@ -253,6 +276,10 @@ public class HiFive extends CardGame
         logResult.append("\n");
     }
 
+
+    /**
+     * Logs the scores of all players at the end of a round
+     */
     private void addEndOfGameToLog(List<Integer> winners)
     {
         logResult.append("EndGame:");

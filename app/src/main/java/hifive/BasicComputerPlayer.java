@@ -30,6 +30,14 @@ public class BasicComputerPlayer extends ComputerPlayer
         super(id, deck, properties, game);
     }
 
+    /**
+     * BasicComputerPlayer play a card
+     * If value cards are available, the player chooses the card with the lowest suit and highest rank.
+     * Otherwise, the player selects a picture card based on the lowest rank and suit.
+     * The selected card is removed from the hand
+     *
+     * @return Card: selected card
+     */
     @Override
     public Card play()
     {

@@ -1,11 +1,17 @@
 package hifive;
 
-import ch.aplu.jcardgame.*;
-import ch.aplu.jgamegrid.GameGrid;
+import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.Deck;
 
-import java.util.List;
 import java.util.Properties;
 
+/**
+ * ComputerPlayer class to representing a computer-controlled player in the game
+ *
+ * @version 1.0
+ * @since 2024-10-01
+ * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ */
 public class ComputerPlayer extends Player
 {
     /**
@@ -20,6 +26,13 @@ public class ComputerPlayer extends Player
         super(id, deck, properties, game);
     }
 
+    /**
+     * Computer player play a card
+     * The card is selected randomly from the player's hand
+     * The selected card is then removed from the hand
+     *
+     * @return Card: selected card
+     */
     @Override
     public Card play()
     {
@@ -29,6 +42,11 @@ public class ComputerPlayer extends Player
         return selected;
     }
 
+    /**
+     * Choose the card to be discarded
+     *
+     * @return Cards : the card that selected to discard
+     */
     @Override
     public Card discardCard()
     {

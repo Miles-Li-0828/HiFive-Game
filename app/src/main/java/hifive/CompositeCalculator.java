@@ -15,10 +15,21 @@ import java.util.List;
 public class CompositeCalculator implements ScoreCalculator
 {
     private List<ScoreCalculator> calculators;
+
+    /**
+     * Constructor of CompositeCalculator
+     */
     public CompositeCalculator()
     {
         this.calculators = new ArrayList<ScoreCalculator>();
     }
+
+    /**
+     * Calculates the maximum score
+     *
+     * @param privateCards: the list of cards used to calculate the score
+     * @return int: the highest score
+     */
     @Override
     public int calculateScore(List<Card> privateCards)
     {
@@ -30,10 +41,21 @@ public class CompositeCalculator implements ScoreCalculator
         return maxScore;
     }
 
+    /**
+     * Adds a ScoreCalculator to the composite
+     *
+     * @param cal: the ScoreCalculator to be added
+     */
     public void addCalculator(ScoreCalculator cal)
     {
         calculators.add(cal);
     }
+
+    /**
+     * Removes a ScoreCalculator from the composite
+     *
+     * @param cal: the ScoreCalculator to be removed
+     */
     public void removeCalculator(ScoreCalculator cal)
     {
         calculators.remove(cal);
