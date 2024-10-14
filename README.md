@@ -34,7 +34,7 @@ The project includes the core gameplay of HiFive, player types (including a clev
 
 1. Clone the repository:
    ```sh
-   git clone [<repository-url>](https://github.com/Miles-Li-0828/HiFive-Game.git)
+   git clone https://github.com/Miles-Li-0828/HiFive-Game.git
    ```
 2. Ensure that you have **Java JDK 11** or higher installed.
 
