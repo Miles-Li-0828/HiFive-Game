@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  *
  * @version 2.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
  */
 @SuppressWarnings("serial")
 public class HiFive extends CardGame
@@ -35,6 +35,7 @@ public class HiFive extends CardGame
     public static final int SUM_FIVE_POINTS = 60;
     public static final int DIFFERENCE_FIVE_POINTS = 20;
     private final Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
+    public static List<Card> discardedCards = new ArrayList<>();
     private final Location[] handLocations = {
             new Location(350, 625),
             new Location(75, 350),
@@ -147,6 +148,7 @@ public class HiFive extends CardGame
     /**
      * return random Enum value
      */
+
     public static <T extends Enum<?>> T randomEnum(Class<T> clazz)
     {
         int x = random.nextInt(clazz.getEnumConstants().length);
@@ -158,6 +160,7 @@ public class HiFive extends CardGame
      * @param hand: a hand of card
      * @return Card: a random card from hand
      */
+
     public Card getRandomCard(Hand hand)
     {
         dealACardToHand(hand);
@@ -195,7 +198,7 @@ public class HiFive extends CardGame
                 {
                     continue;
                 }
-                Card card = CardBase.getCardFromList(pack.getCardList(), initialCard);
+                Card card = CardUtils.getCardFromList(pack.getCardList(), initialCard);
 
                 if (card != null)
                 {
@@ -211,7 +214,7 @@ public class HiFive extends CardGame
             for (int j = 0; j < cardsToDealt; j++)
             {
                 if (pack.isEmpty()) return;
-                Card dealt = CardBase.randomCard(pack.getCardList());
+                Card dealt = CardUtils.randomCard(pack.getCardList());
                 dealt.removeFromHand(false);
                 players[i].getHand().insert(dealt, false);
             }
@@ -223,10 +226,11 @@ public class HiFive extends CardGame
      *
      * @param hand: a hand of card
      */
+
     public void dealACardToHand(Hand hand)
     {
         if (pack.isEmpty()) return;
-        Card dealt = CardBase.randomCard(pack.getCardList());
+        Card dealt = CardUtils.randomCard(pack.getCardList());
         dealt.removeFromHand(true);
         hand.insert(dealt, true);
     }
@@ -276,7 +280,6 @@ public class HiFive extends CardGame
         logResult.append("\n");
     }
 
-
     /**
      * Logs the scores of all players at the end of a round
      */
@@ -307,11 +310,6 @@ public class HiFive extends CardGame
         while (roundNumber <= 4)
         {
             Card selected = null;
-
-//            if (players[nextPlayerID] instanceof CleverComputerPlayer)
-//            {
-//                ((CleverComputerPlayer) players[nextPlayerID]).setCardsPlayed(cardsPlayed);
-//            }
 
             selected = players[nextPlayerID].discardCard();
             players[nextPlayerID].calculateScore();

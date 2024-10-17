@@ -22,6 +22,12 @@ public abstract class ArithmeticFiveCalculator implements ScoreCalculator
      * @return the calculated score if the goal is reached using the rank values or alternative
      *         values of wildcards, or 0 if no valid combination is found.
      */
+    private CardDecoratorFactory cdf;
+
+    public ArithmeticFiveCalculator()
+    {
+        cdf = new CardDecoratorFactory();
+    }
     @Override
     public int calculateScore(List<Card> privateCards)
     {
@@ -31,16 +37,18 @@ public abstract class ArithmeticFiveCalculator implements ScoreCalculator
         Rank rank1 = (Rank) card1.getRank();
         Rank rank2 = (Rank) card2.getRank();
 
+        CardDecorator cd1 = cdf.getWildCardDecorator(rank1, card1);
+        CardDecorator cd2 = cdf.getWildCardDecorator(rank2, card2);
+
         // Use the operation method (to be implemented by subclasses) for the core logic
-        if (checkGoalReached(applyOperation(rank1.getRankCardValue(), rank2.getRankCardValue())))
-        {
-            return calculateScoreWithSuits(card1, card2);
-        }
+//        if (cd1 == null && cd2 == null
+//                && checkGoalReached(applyOperation(rank1.getRankCardValue(), rank2.getRankCardValue())))
+//        {
+//            return calculateScoreWithSuits(card1, card2);
+//        }
 
-        CardDecorator cd1 = getWildCardDecorator(rank1, card1);
-        CardDecorator cd2 = getWildCardDecorator(rank2, card2);
-
-        if (checkAlternativeValues(cd1, rank2.getRankCardValue())
+        if (checkGoalReached(applyOperation(rank1.getRankCardValue(), rank2.getRankCardValue()))
+                || checkAlternativeValues(cd1, rank2.getRankCardValue())
                 || checkAlternativeValues(cd2, rank1.getRankCardValue())
                 || checkBothWildCardCombinations(cd1, cd2))
         {
@@ -67,7 +75,8 @@ public abstract class ArithmeticFiveCalculator implements ScoreCalculator
      * @return boolean: true if the result matches the goal; false otherwise
      */
     // Method to check if the operation result matches the goal (can be sum or difference)
-    private boolean checkGoalReached(int result) {
+    private boolean checkGoalReached(int result) 
+    {
         return result == HiFive.FIVE_GOAL;
     }
 
@@ -92,29 +101,7 @@ public abstract class ArithmeticFiveCalculator implements ScoreCalculator
         return getPoints() + suit1.getBonusFactor() + suit2.getBonusFactor();
     }
 
-    /**
-     * A decorator for wildcard
-     *
-     * @param rank: the rank of the card
-     * @param card: the card to be decorated
-     * @return CardDecorator: for the wildcard; or null otherwise
-     */
-    private CardDecorator getWildCardDecorator(Rank rank, Card card)
-    {
-        switch (rank)
-        {
-            case ACE:
-                return new WildCardA(card);
-            case JACK:
-                return new WildCardJ(card);
-            case QUEEN:
-                return new WildCardQ(card);
-            case KING:
-                return new WildCardK(card);
-            default:
-                return null;
-        }
-    }
+
 
     /**
      * Checks if using the alternative values got by the wildcard decorator

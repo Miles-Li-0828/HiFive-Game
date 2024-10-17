@@ -4,19 +4,19 @@ import ch.aplu.jcardgame.Card;
 
 public enum Rank
 {
-TWO(2, 2),
-THREE(3, 3),
-FOUR(4, 4),
-FIVE(5, 5),
-SIX(6, 6),
-SEVEN(7, 7),
-EIGHT(8, 8),
-NINE(9, 9),
-TEN(10, 10),
-JACK(11, 11),
-QUEEN(12, 12),
+ACE(1, 1),
 KING(13, 13),
-ACE(1, 1);
+QUEEN(12, 12),
+JACK(11, 11),
+TEN(10, 10),
+NINE(9, 9),
+EIGHT(8, 8),
+SEVEN(7, 7),
+SIX(6, 6),
+FIVE(5, 5),
+FOUR(4, 4),
+THREE(3, 3),
+TWO(2, 2);
 
     private int rankCardValue = 1;
     private int scoreValue = 0;

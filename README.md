@@ -2,87 +2,90 @@
 
 ## Overview
 
-The **HiFive Game** is a card game designed as part of a software engineering project at the University of Melbourne. This project focuses on enhancing a previously flawed implementation by applying sound software engineering principles and object-oriented design patterns. Our improvements aimed to make the codebase more modular, maintainable, and extendable.
-
-### Game Rules
-- **Objective**: Players aim to maximize their scores by forming combinations of cards that match specific scoring criteria.
-- **Setup**: Each player starts with two cards, and the game progresses through four rounds. Players must draw a card, evaluate their hand, and then decide which card to discard to maximize their score.
-- **Scoring**: Various scoring algorithms are applied based on the cards each player retains. Points are awarded based on card combinations that meet the game’s criteria.
-
-The project includes the core gameplay of HiFive, player types (including a clever AI), and multiple scoring strategies, which were designed and implemented using key design patterns to ensure code quality and maintainability.
-
-## Table of Contents
-
-1. [Features](#features)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Key Design Patterns](#key-design-patterns)
-5. [Clever Computer Player](#clever-computer-player)
-6. [Future Enhancements](#future-enhancements)
+The **HiFive Game** is a strategic card game developed as part of the SWEN30006 Project 2 assignment. This project aims to create a more intelligent and maintainable software design using various object-oriented programming principles and design patterns. The HiFive game consists of multiple rounds where players attempt to discard cards to maximize their score. The primary goal was to refactor an initially monolithic and poorly designed codebase into a modular, maintainable, and extendable software application.
 
 ## Features
 
-- **Refactored Game Structure**: The original monolithic `HiFive` class was broken down into smaller, more specialized classes, each responsible for a specific aspect of the game.
-- **Multiple Player Types**: The game supports different player types:
-  - Human Player
-  - Basic Computer Player
-  - Clever Computer Player (using a strategic decision-making algorithm)
-- **Scoring System**: A flexible scoring system that allows for multiple scoring rules through the implementation of different scoring algorithms.
-- **Wild Card Implementation**: Wild cards with additional functionalities were implemented using a decorator pattern, allowing the flexibility to add new card behaviors.
+1. **Player Types:**
+   - Human Player
+   - Basic Computer Player
+   - Clever Computer Player: Designed to make more strategic decisions by evaluating both immediate scoring potential and future probabilities.
 
-## Installation
+2. **Card Types:**
+   - Standard Cards
+   - Wild Cards with Decorator Pattern: Allows cards to have additional properties, enhancing versatility.
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/Miles-Li-0828/HiFive-Game.git
-   ```
-2. Ensure that you have **Java JDK 11** or higher installed.
+3. **Game Rules:**
+   - The game revolves around the concept of forming combinations to achieve the target number of 5.
+   - Players aim to maximize their score each round by strategically discarding cards.
+   
+## Design Patterns
 
-## Usage
+The following design patterns were used to achieve a well-structured and modular architecture:
 
-To run the game:
+1. **Factory Pattern** - Used for the creation of player entities (`PlayerFactory`) and decorated card instances (`CardDecoratorFactory`), making it easy to add new types of players and card functionalities.
 
-1. Compile the project using:
-   ```sh
-   javac -d bin src/hifive/*.java
-   ```
-2. Run the game:
-   ```sh
-   java -cp bin hifive.Driver
-   ```
+2. **Strategy Pattern** - Implemented to handle different scoring rules, allowing for flexible switching between different scoring strategies.
 
-The `Driver` class initializes the game with the chosen player modes and deck configuration.
+3. **Composite Pattern** - Applied for the score calculation (`CompositeCalculator`) to determine the highest score by combining multiple scoring strategies.
 
-## Key Design Patterns
+4. **Decorator Pattern** - Used to add wild card functionalities, enabling cards to take on multiple values without modifying the original card class.
 
-### 1. Factory Pattern
-The **Factory Pattern** was applied to handle the initialization of different player entities. The `PlayerFactory` class was introduced to facilitate the creation of various types of players like `HumanPlayer`, `BasicComputerPlayer`, and `CleverComputerPlayer`.
-
-### 2. Strategy Pattern
-The **Strategy Pattern** was employed to manage different scoring rules, encapsulating four different scoring algorithms (`FiveCalculator`, `SumFiveCalculator`, `DifferenceFiveCalculator`, and `NoFiveCalculator`). This approach allows for easy extension by adding new scoring strategies in the future.
-
-### 3. Composite Pattern
-The **Composite Pattern** was used to calculate player scores by combining different scoring calculators in the `CompositeCalculator` class. This design enables a flexible scoring system that calculates the maximum score by aggregating all possible scoring methods.
-
-### 4. Decorator Pattern
-The **Decorator Pattern** was applied to implement wild card functionalities. The `CardDecorator` class extends the base `Card` class, enabling additional behaviors and characteristics for wild cards like `WildCardA`, `WildCardJ`, `WildCardQ`, and `WildCardK`.
-
-### 5. Singleton Pattern
-The **Singleton Pattern** was used for the `FactoryCalculator` class to ensure consistency between calculators and reduce memory usage. This approach ensures there is only one instance of the `FactoryCalculator` throughout the application.
+5. **Singleton Pattern** - Applied to the `FactoryCalculator` class to ensure consistent creation of calculator objects and efficient memory usage.
 
 ## Clever Computer Player
 
-The **Clever Computer Player** utilizes a greedy algorithm to maximize the score in each round. The implementation involves:
+The **Clever Computer Player** was introduced to enhance gameplay through a strategic two-stage approach:
 
-- **Card Evaluation**: The Clever Computer Player evaluates all cards in its hand, simulating potential scores when discarding one card.
-- **Score Calculation**: Uses the `CompositeCalculator` to determine the score for each possible combination, selecting the card that results in the highest score.
-- **Greedy Approach**: The player makes locally optimal decisions in each round, selecting the best two cards and discarding the least favorable one.
+1. **Maximizing Immediate Score**: Evaluates each card in hand and discards the one that maximizes the score achievable with the remaining cards.
+2. **Considering Future Potential**: If no immediate benefit is found, the player evaluates the probabilities of forming winning combinations using the remaining cards in the deck.
 
-### Limitations
-- The player’s strategy does not consider the cards played by other players since HiFive consists of only four rounds, and tracking all cards would increase the game's complexity without significant gains.
+The Clever Computer Player uses game metrics and discarded cards to make informed decisions, balancing both immediate gains and potential future outcomes. This makes the gameplay more challenging and dynamic.
+
+## Improvements Over the Original Design
+
+The original implementation of the HiFive game suffered from several issues:
+
+- **High Coupling & Lack of Modularity**: All functionalities were crammed into a single monolithic class.
+- **No Encapsulation**: Player behaviors, scoring mechanisms, and game logic were bundled together, leading to low maintainability.
+- **Absence of Object-Oriented Principles**: No use of inheritance, polymorphism, or proper abstraction.
+
+### Refactoring Highlights
+
+- **Single Responsibility Principle**: Each game entity was refactored into a distinct class with a single responsibility, such as `Player`, `Card`, and `ScoreCalculator`.
+- **Player Class Refactoring**: Player logic was encapsulated into different classes (`HumanPlayer`, `BasicComputerPlayer`, `CleverComputerPlayer`), with shared behavior abstracted into a common `Player` base class.
+- **Scoring Mechanism**: The scoring rules were encapsulated using the Strategy and Composite patterns, making it easy to extend or modify how scores are calculated.
+
+## How to Run
+
+1. **Requirements**:
+   - Java 11 or above.
+   - Dependencies: Ensure that the `JGameGrid` library is included in the classpath for graphical rendering.
+
+2. **Running the Game**:
+   - Compile all Java files.
+   - Run the `Driver` class to start the game.
+
+## Files in the Repository
+
+- **HiFive.java**: The main game logic class (refactored).
+- **Driver.java**: Entry point for running the game.
+- **Player Classes**: Includes `HumanPlayer`, `BasicComputerPlayer`, and `CleverComputerPlayer`.
+- **Score Calculators**: Classes for different scoring strategies (`FiveCalculator`, `SumFiveCalculator`, etc.).
+- **Decorator Classes**: Classes for adding wild card properties to standard cards.
 
 ## Future Enhancements
 
-- **Extended AI Strategies**: Introduce additional decision-making algorithms for computer players, allowing them to learn and adapt during gameplay.
-- **Improved User Interface**: Develop a graphical interface to enhance the gaming experience.
-- **Network Play**: Extend the game to support multiplayer functionality over a network.
+- **Learning Mechanism**: Introduce a learning mechanism for the Clever Computer Player to adapt strategies over time.
+- **GUI Enhancements**: Improve the game’s user interface for a better player experience.
+- **Additional Game Modes**: Add new game modes to further increase replayability and challenge.
+
+## Contributors
+
+- **Miles Li** (liyueming828@gmail.com)
+- **Skylar Khant** (kyishink@student.unimelb.edu.au)
+- **Ngoc Thanh Lam Nguyen** (ngocthanhlam@student.unimelb.edu.au)
+
+## License
+
+This project is licensed under the MIT License.

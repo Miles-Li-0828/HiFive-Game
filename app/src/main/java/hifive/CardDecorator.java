@@ -10,9 +10,10 @@ import java.util.List;
  *
  * @version 1.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
  */
-public abstract class CardDecorator {
+public abstract class CardDecorator 
+{
     private Card card;
     private List<Integer> altValues;
 
@@ -31,7 +32,7 @@ public abstract class CardDecorator {
     /**
      * getter
      *
-     * @return a list of alternative values for the card
+     * @return List<Integer>: a list of alternative values for the card
      */
     public List<Integer> getAltValues()
     {

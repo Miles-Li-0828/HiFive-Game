@@ -5,9 +5,10 @@ package hifive;
  *
  * @version 1.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
  */
-public class DifferenceFiveCalculator extends ArithmeticFiveCalculator {
+public class DifferenceFiveCalculator extends ArithmeticFiveCalculator 
+{
 
     /**
      * Calculate the difference between two card values
@@ -17,7 +18,8 @@ public class DifferenceFiveCalculator extends ArithmeticFiveCalculator {
      * @return int: the difference between the two card value
      */
     @Override
-    protected int applyOperation(int value1, int value2) {
+    protected int applyOperation(int value1, int value2) 
+    {
         return Math.abs(value1 - value2);
     }
 
@@ -27,7 +29,8 @@ public class DifferenceFiveCalculator extends ArithmeticFiveCalculator {
      * @return int: the point value
      */
     @Override
-    protected int getPoints() {
+    protected int getPoints() 
+    {
         return HiFive.DIFFERENCE_FIVE_POINTS;
     }
 }

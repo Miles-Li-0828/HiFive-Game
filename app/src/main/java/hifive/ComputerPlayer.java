@@ -1,8 +1,9 @@
 package hifive;
 
-import ch.aplu.jcardgame.Card;
-import ch.aplu.jcardgame.Deck;
+import ch.aplu.jcardgame.*;
+import ch.aplu.jgamegrid.GameGrid;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Properties;
  *
  * @version 1.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
  */
 public class ComputerPlayer extends Player
 {
@@ -67,6 +68,8 @@ public class ComputerPlayer extends Player
             super.getGame().setStatusText("Player " + super.getId() + " thinking...");
             selected = play();
         }
+
+        HiFive.discardedCards.add(selected);
         return selected;
     }
 }

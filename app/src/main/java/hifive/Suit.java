@@ -26,7 +26,7 @@ public enum Suit implements Comparable<Suit>
 
     public static Suit getSuitFromString(String cardName)
     {
-        String rankString = cardName.substring(0, cardName.length() - 1);
+//        String rankString = cardName.substring(0, cardName.length() - 1);
         String suitString = cardName.substring(cardName.length() - 1, cardName.length());
 
         for (Suit suit : Suit.values())

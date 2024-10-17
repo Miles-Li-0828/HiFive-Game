@@ -15,14 +15,14 @@ import java.util.List;
  *
  * @version 1.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
  */
 public abstract class Player
 {
     private Hand hand;
     private int score;
     private int id;
-    private FactoryCalculator factoryCalculator = FactoryCalculator.getFactoryCalculator();
+    private CalculatorFactory factoryCalculator = CalculatorFactory.getFactoryCalculator();
     private CompositeCalculator cc;
     private Font bigFont = HiFive.bigFont;
     private Color bgColor = new Color(0, 0, 0, 0);
@@ -133,7 +133,7 @@ public abstract class Player
         String cardDealtString = cardStrings[0];
 
         if (game.getPack().isEmpty()) return null;
-        Card dealt = CardBase.getCardFromList(game.getPack().getCardList(), cardDealtString);
+        Card dealt = CardUtils.getCardFromList(game.getPack().getCardList(), cardDealtString);
         if (dealt != null)
         {
             dealt.removeFromHand(false);
@@ -147,7 +147,7 @@ public abstract class Player
         if (cardStrings.length > 1)
         {
             String cardDiscardString = cardStrings[1];
-            return CardBase.getCardFromList(hand.getCardList(), cardDiscardString);
+            return CardUtils.getCardFromList(hand.getCardList(), cardDiscardString);
         }
         else
         {

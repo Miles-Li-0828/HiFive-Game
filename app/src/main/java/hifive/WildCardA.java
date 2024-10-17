@@ -2,7 +2,8 @@ package hifive;
 
 import ch.aplu.jcardgame.Card;
 
-public class WildCardA extends CardDecorator {
+public class WildCardA extends CardDecorator 
+{
     public WildCardA(Card card)
     {
         super(card);

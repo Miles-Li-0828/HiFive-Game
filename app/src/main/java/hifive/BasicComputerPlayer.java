@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * BasicComputerPlayer class
+ * BasicComputerPlayer class represents the implementation of a basic computer player mode in the game
  *
  * @version 1.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
  */
 public class BasicComputerPlayer extends ComputerPlayer
 {
@@ -73,6 +73,7 @@ public class BasicComputerPlayer extends ComputerPlayer
             selected = cardWithLowestRankAndSuit(pictureCards);
         }
 
+        System.out.println("BasicPlayer discard: " + selected.getSuit() + " " + selected.getRank());
         selected.removeFromHand(true);
         super.getGame().refresh();
         return selected;

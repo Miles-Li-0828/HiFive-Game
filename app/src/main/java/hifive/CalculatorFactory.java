@@ -6,16 +6,17 @@ package hifive;
  *
  * @version 1.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
- */public class FactoryCalculator
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
+ */
+public class CalculatorFactory
 {
-    private static FactoryCalculator factoryCalculator = null;
+    private static CalculatorFactory factoryCalculator = null;
     private CompositeCalculator compCalculator;
 
     /**
      * Constructor or FactoryCalculator
      */
-    private FactoryCalculator()
+    private CalculatorFactory()
     {
         compCalculator = new CompositeCalculator();
         createCompCalculator();
@@ -48,11 +49,11 @@ package hifive;
      *
      * @return FactoryCalculator: the singleton instance of FactoryCalculator
      */
-    public static FactoryCalculator getFactoryCalculator()
+    public static CalculatorFactory getFactoryCalculator()
     {
         if (factoryCalculator == null)
         {
-            factoryCalculator = new FactoryCalculator();
+            factoryCalculator = new CalculatorFactory();
         }
         return factoryCalculator;
     }

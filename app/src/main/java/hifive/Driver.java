@@ -1,5 +1,8 @@
 package hifive;
 
+import ch.aplu.jcardgame.Deck;
+
+import java.util.Map;
 import java.util.Properties;
 
 public class Driver

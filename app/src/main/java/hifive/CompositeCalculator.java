@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Composite pattern to calculate score
+ * Implement composite pattern to calculate score
+ * It allows the combination of multiple ScoreCalculator objects
  *
  * @version 1.0
  * @since 2024-10-01
- * @author Miles Li, Kylar Khant, Ngoc Thanh Lam Nguyen
+ * @author Miles Li, Skylar Khant, Ngoc Thanh Lam Nguyen
  */
 public class CompositeCalculator implements ScoreCalculator
 {
@@ -37,8 +38,25 @@ public class CompositeCalculator implements ScoreCalculator
         for(ScoreCalculator cal: calculators)
         {
             maxScore = Math.max(maxScore, cal.calculateScore(privateCards));
+            System.out.println(maxScore + "\t");
         }
         return maxScore;
+    }
+
+    /**
+     * Calculates the highest score without NoFive calculator
+     *
+     * @param privateCards: the list of cards used to calculate the score
+     * @return int: the highest score
+     */
+    public int calculateHighestScoreOnFive(List<Card> privateCards)
+    {
+        int bestScore = 0;
+        for(int i = 0; i < calculators.size() - 1; i++)
+        {
+            bestScore = Math.max(bestScore, calculators.get(i).calculateScore(privateCards));
+        }
+        return bestScore;
     }
 
     /**

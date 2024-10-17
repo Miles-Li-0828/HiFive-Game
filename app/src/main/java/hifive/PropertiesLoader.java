@@ -8,7 +8,8 @@ public class PropertiesLoader
 {
     public static Properties loadPropertiesFile(String propertiesFile)
     {
-        try (InputStream input = PropertiesLoader.class.getClassLoader().getResourceAsStream(propertiesFile)) {
+        try (InputStream input = PropertiesLoader.class.getClassLoader().getResourceAsStream(propertiesFile)) 
+        {
 
             Properties prop = new Properties();
             // load a properties file
